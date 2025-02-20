@@ -7,6 +7,8 @@ services:
     environment:
       - DATABASE_URL=file:./dev.db
       - JWT_SECRET=your_secret
+    volumes:
+      - ./dev.db:/app/dev.db
 
   frontend:
     build: ./front
