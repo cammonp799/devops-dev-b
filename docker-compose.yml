@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  backend:
+    build: ./back
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - JWT_SECRET=your_secret
+
+  frontend:
+    build: ./front
+    ports:
+      - "8080:80"
+    environment:
+      - VITE_API_URL=http://localhost:3000

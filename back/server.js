@@ -1,5 +1,8 @@
 import app from './app.js'
 import prisma from './db.js'
+// Nouvel import
+import bcrypt from 'bcryptjs'
+
 
 prisma.$connect().then(async () => {
     console.log('Connected to the database')

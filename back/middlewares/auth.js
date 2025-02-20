@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 
+
 const authMiddleware = (req, res, next) => {
     let token = req.headers?.authorization // Get the token from the headers
 
