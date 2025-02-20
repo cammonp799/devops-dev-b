@@ -21,7 +21,7 @@ jobs:
 
       - name: Log in to Scaleway Container Registry
         run: |
-          echo "${{ secrets.SCW_SECRET_KEY }}" | docker login registry.scaleway.com -u "${{ secrets.SCW_ACCESS_KEY }}" --password-stdin
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login registry.scaleway.com -u "${{ secrets.DOCKER_HOST }}" --password-stdin
 
       - name: Build and push backend image
         run: |
