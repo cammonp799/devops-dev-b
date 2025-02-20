@@ -1,0 +1,34 @@
+name: Deploy Backend & Frontend
+
+on:
+  push:
+    branches:
+      - feature-branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Scaleway Container Registry
+        run: |
+          echo "${{ secrets.SCW_SECRET_KEY }}" | docker login registry.scaleway.com -u "${{ secrets.SCW_ACCESS_KEY }}" --password-stdin
+
+      - name: Build and push backend image
+        run: |
+          docker build -t registry.scaleway.com/${{ secrets.SCW_REGISTRY_NAMESPACE }}/backend:latest -f back/Dockerfile back
+          docker push registry.scaleway.com/${{ secrets.SCW_REGISTRY_NAMESPACE }}/backend:latest
+
+      - name: Build and push frontend image
+        run: |
+          docker build -t registry.scaleway.com/${{ secrets.SCW_REGISTRY_NAMESPACE }}/frontend:latest -f front/Dockerfile front
+          docker push registry.scaleway.com/${{ secrets.SCW_REGISTRY_NAMESPACE }}/frontend:latest
